@@ -1,0 +1,197 @@
+<!Doctype html>
+<html>
+<head>
+	<title>
+	   Do what you want
+	</title>
+	<script  src="jquery-3.4.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+   
+	<style>
+	     body{
+	     	background-color:#f9f9f9;
+
+	     }
+
+	     #list{
+	     	background-color:#e6ccb3; 
+            height:auto;
+            width: auto;
+            margin:100px;
+            border-radius: 10px;
+	     }
+	     #container{
+	      padding: 10px;
+	     }
+	     #enter{
+	     	height:30px;
+	     	width:500px;
+	     	background-color:#e6ccb3;
+	     	text-decoration-color:#663300;
+	     	font-size: 20px;
+	     	font-family: verdana; 
+	     }
+	     #button{
+	     	background-color: #e6ccb3;
+	     }
+		 li{
+			 color: black;
+			 font-family: verdana;
+			 font-size: 40px;
+			 text-transform: uppercase;
+		
+			
+		 }
+       #bt2{
+		background-color: #e6ccb3;
+	   }
+	   #bt3{
+		background-color: #e6ccb3;
+	   }
+	   #bt4{
+		background-color: #e6ccb3;
+	   }
+	   #array{
+		   height:50px;
+		   width: 50px;
+		   border-radius: 50px;
+		   background-color: #e6ccb3;
+		   display:none;
+		  
+	   }
+	   #p1{
+		   text-align: center;
+		font-family: verdana;
+		padding:16px;
+		font-size: 20px;
+	   }
+	   #tobcmpt{
+		   background-color: #e6ccb3;
+		   border-radius:20px;
+		   display:none;
+		   width:1000px;
+
+	   }
+	   #anlys{
+		height:30px;
+	     	width:500px;
+	     	background-color:#f5efea;
+	   }
+	   #anlys1{
+		height:30px;
+	     	width:500px;
+	     	background-color:#f5efea;
+	   }
+	   .task{
+		   font-size: 30px;
+		   font-family: Verdana;
+	   }
+	   #close{
+		background-color: #e6ccb3;
+	   }
+	</style>
+</head>
+<body   onload="startTime()"> 
+ <center>
+ 	<h1> <i><b><span style="font-family: Verdana;"> Do what you Want..</span></b></i></h1>
+ 	<div id="container">
+ 		<input type="text" id="enter" >
+ 		<button id="button"><span style="font-family: Verdana;" style="color: #663300,font-size:20px;"><b>ADD</b></button>
+	 </div>
+	 <button id='bt2'><span style="font-family: Verdana;" style="color: #663300,font-size:30px;"><b>Empty</b></button>
+	 <h1><span style="font-family: verdana;">Hurry up....!</span><p id='time'></p></h1>
+ 	  <div id="list">
+       <ul id='todo'>
+       </ul>
+	   </div>
+	   <div id = "time"></div>
+	   <button id='bt3'><span style="font-family: Verdana;" style="color: #663300,font-size:30px;"><b>Finish</b></button>
+		<button id='bt4'><span style="font-family: Verdana;" style="color: #663300,font-size:30px;"><b>Track your list</b></button>
+			<br />
+			<div id= "array"><p id="p1" ></p></div>
+			<br />
+			<div id="tobcmpt">
+				<table>
+					<tr>
+					 <td><p class="task"><b>to be complete</p></td><td><input id="anlys" type="text" ></td>
+					</tr>
+					<tr> 
+						<td><P class="task"><b>completed</P></td><td><input id="anlys1" type="text" value='0'></td> <td><button id="count">Done</button></td>
+					</tr>
+					
+				</table>
+				<button id ="close"><span style="font-family: Verdana;" style="color: #663300,font-size:30px;"></span><b>close</button>
+				<br />
+			</div>
+ </center>
+ <script> 
+   var track=[];
+   var i=0;
+	$('document').ready(function(){
+
+		$('#button').click(function()
+		  {   
+			  var rec = document.getElementById('enter').value;
+			  if(rec!='')
+			 $('ul').append("<li><i>"+rec+"</i></li>");
+			  track[i]= rec;
+			  i++; 
+			  document.getElementById('anlys').value=i; 
+		  })
+		  $('#bt2').click(function(){	
+			  document.getElementById('enter').value='';
+		  });
+		  $('#bt3').click(function(){	
+			  $('ul').empty();
+			  track.length=0;
+			  document.getElementById('p1').innerHTML='0';
+			  document.getElementById('anlys').value='0';
+			  document.getElementById('anlys1').value=i;
+		  });
+		  $('#bt4').click(function(){
+			var l=track.length;
+			$('#array').slideToggle();
+			document.getElementById('p1').innerHTML=l;
+			$('#tobcmpt').slideToggle();
+		  });
+		  $('#count').click(function(){
+			  var complete = document.getElementById('anlys1').value;
+			  if( complete <= i)
+			  {
+				  document.getElementById('anlys').value= i-complete;
+			  }
+			  if( complete == 0)
+			  {
+				window.alert("YOU HAVEN'T DONE ANYTHING TODAY....!");
+			  }
+			  if(complete>i)
+			  {
+				  window.alert("CLEAN YOUR EYES TWICE");
+			  }
+		  });
+		  $('#close').click(function(){
+             $('#tobcmpt').slideUp();
+		  });
+		  
+	 });
+	 function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('time').innerHTML =
+  h + ":" + m + ":" + s;
+  var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};
+  return i;
+}
+
+</script>
+</body>
+</html>
